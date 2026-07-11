@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Google Login</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body style="padding: 50px; font-family: sans-serif;">
+    <h2>1. Bấm nút đăng nhập bên dưới:</h2>
+    
+    <div id="g_id_onload"
+         data-client_id="905860478642-324157lupm1u7oipb0smc3f28g79fah1.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <h2>2. Lấy idToken ở đây:</h2>
+    <textarea id="token-display" style="width: 100%; height: 200px; margin-top: 10px;" placeholder="Token sẽ hiện ở đây..."></textarea>
+
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            document.getElementById('token-display').value = response.credential;
+        }
+    </script>
+</body>
+</html>

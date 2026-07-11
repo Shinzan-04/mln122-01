@@ -1,0 +1,11 @@
+/* ─── Vietnamese-friendly fonts ─────────────────────────────────────── */
+/* Inter: sans-serif body text — full Vietnamese support */
+/* Lora:  serif headings       — full Vietnamese support */
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.font-serif {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+}

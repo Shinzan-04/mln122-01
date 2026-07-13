@@ -9,6 +9,7 @@ import { QuizPage } from "../pages/QuizPage";
 import { RankingPage } from "../pages/RankingPage";
 import { TopicDetailPage } from "../pages/TopicDetailPage";
 import { TopicsPage } from "../pages/TopicsPage";
+import { WordSearchGamePage } from "../pages/WordSearchGamePage";
 
 export const appRouter = createBrowserRouter([
   { path: "/login",    element: <LoginPage />    },
@@ -20,6 +21,7 @@ export const appRouter = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "chatbot", element: <ChatbotPage /> },
       { path: "quiz", element: <QuizPage /> },
+      { path: "word-search", element: <WordSearchGamePage /> },
       { path: "ranking", element: <RankingPage /> },
       { path: "topics", element: <TopicsPage /> },
       { path: "topics/:id", element: <TopicDetailPage /> },

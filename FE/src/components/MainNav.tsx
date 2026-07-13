@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { BookOpen, Home, LogIn, LogOut, Medal, MessageCircle, Trophy } from "lucide-react";
+import { BookOpen, Grid3x3, Home, LogIn, LogOut, Medal, MessageCircle, Trophy } from "lucide-react";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { useAuth } from "../context/AuthContext";
 
@@ -7,6 +7,7 @@ const links = [
   { to: "/", label: "Trang chủ", icon: Home,          end: true  },
   { to: "/topics",  label: "Chủ đề",   icon: BookOpen,     end: false },
   { to: "/quiz",     label: "Quiz",      icon: Trophy,        end: false },
+  { to: "/word-search", label: "Săn mã", icon: Grid3x3,      end: false },
   { to: "/ranking",  label: "Xếp hạng", icon: Medal,         end: false },
   { to: "/chatbot",  label: "Chatbot",  icon: MessageCircle, end: false },
 ];

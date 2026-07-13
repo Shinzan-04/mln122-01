@@ -4121,6 +4121,285 @@ textarea {
 }
 
 /* ══════════════════════════════════════════════════════════
+   WORD SEARCH GAME
+   ══════════════════════════════════════════════════════════ */
+.ws-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.ws-progress-card {
+  padding: 16px 20px;
+}
+
+.ws-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ws-progress-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--theme-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ws-progress-count {
+  font-weight: 700;
+  color: var(--theme-chip-text);
+}
+
+.ws-progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--theme-primary-light);
+  overflow: hidden;
+}
+
+.ws-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--theme-btn-gradient);
+  transition: width 300ms ease;
+}
+
+.ws-board {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ws-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 4px;
+  width: min(100%, 520px);
+  user-select: none;
+  touch-action: none;
+}
+
+.ws-cell {
+  aspect-ratio: 1;
+  border: 1.5px solid var(--theme-line);
+  border-radius: 8px;
+  background: white;
+  font-size: clamp(0.72rem, 2.2vw, 0.95rem);
+  font-weight: 800;
+  color: var(--theme-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease, color 120ms ease;
+}
+
+.ws-cell:hover {
+  border-color: var(--theme-primary);
+  background: var(--theme-primary-light);
+}
+
+.ws-cell--selecting {
+  background: var(--theme-nav-active);
+  border-color: var(--theme-primary);
+  color: var(--theme-chip-text);
+  transform: scale(1.04);
+}
+
+.ws-cell--found {
+  background: var(--theme-btn-gradient);
+  border-color: transparent;
+  color: var(--theme-text);
+  box-shadow: 0 2px 8px var(--theme-btn-shadow);
+}
+
+.ws-grid-hint {
+  font-size: 0.82rem;
+  margin: 0;
+  text-align: center;
+}
+
+.ws-questions-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--theme-text);
+  margin: 0 0 10px;
+}
+
+.ws-question-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ws-q-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 14px;
+  border: 1.5px solid var(--theme-line);
+  background: white;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--theme-text);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.ws-q-btn:hover {
+  border-color: var(--theme-primary);
+  background: var(--theme-primary-light);
+  transform: translateY(-1px);
+}
+
+.ws-q-btn--active {
+  background: var(--theme-nav-active);
+  border-color: var(--theme-primary);
+  box-shadow: 0 4px 14px var(--theme-btn-shadow);
+}
+
+.ws-q-btn--solved {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.ws-clue-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: fade-up 280ms ease-out both;
+}
+
+.ws-clue-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ws-clue-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+.ws-clue-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--theme-text);
+  margin: 0;
+}
+
+.ws-clue-answer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--theme-line);
+}
+
+.ws-clue-answer-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--theme-muted);
+  white-space: nowrap;
+}
+
+.ws-clue-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--theme-line);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--theme-text);
+  background: white;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.ws-clue-input:focus {
+  border-color: var(--theme-primary);
+  box-shadow: 0 0 0 3px var(--theme-primary-light);
+}
+
+.ws-clue-input:disabled {
+  background: var(--theme-primary-light);
+  color: var(--theme-chip-text);
+}
+
+.ws-feedback {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.ws-feedback--ok {
+  color: #15803d;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.ws-feedback--err {
+  color: #b33030;
+  background: #fff0f0;
+  border: 1px solid #ffcccc;
+}
+
+.ws-complete {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  color: var(--theme-chip-text);
+}
+
+.ws-complete h3 {
+  font-family: "Fraunces", serif;
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--theme-text);
+}
+
+.ws-complete p {
+  margin: 0;
+  color: var(--theme-muted);
+}
+
+.ws-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* ══════════════════════════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -4161,6 +4440,8 @@ textarea {
   .quiz-next-btn    { width: 100%; }
   .quiz-early-btn   { width: 100%; justify-content: center; }
   .quiz-confirm-card { padding: 24px 18px; }
+  .ws-question-buttons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ws-grid { gap: 3px; }
   .ranking-podium-avatar { width: 52px; height: 52px; }
   .ranking-my-card  { gap: 12px; padding: 14px 16px; }
 }
@@ -4182,6 +4463,8 @@ textarea {
   .hp-cta-strip { padding: 28px 20px; gap: 24px; }
   .hp-title     { font-size: 1.8rem; }
   .hp-trust     { display: none; }
+  .ws-question-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ws-clue-answer-row { flex-direction: column; align-items: stretch; }
 }
 
 /* ══════════════════════════════════════════════════════════

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, ExternalLink, Trophy } from "lucide-react";
 import { Loading } from "../components/Loading";
 import { MarkdownRenderer } from "../components/MarkdownRenderer";
+import { CredibilityFooter } from "../components/CredibilityFooter";
 import { getTopicDetail } from "../services/philosophyApi";
 import type { TopicDetail } from "../types/api";
 
@@ -78,6 +79,8 @@ export function TopicDetailPage(): JSX.Element {
       <div className="article-content">
         <MarkdownRenderer content={data.content} />
       </div>
+
+      <CredibilityFooter />
 
       {/* Actions */}
       <div className="article-actions">

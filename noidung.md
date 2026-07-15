@@ -4,7 +4,7 @@
 
 ## 3.1. Lợi ích kinh tế và các mối quan hệ về lợi ích kinh tế
 
-![Hình 1: Tương tác và hợp tác giữa các chủ thể kinh tế trong nền kinh tế thị trường](/hinh1.png)
+![Hình 1: Tương tác và hợp tác giữa các chủ thể kinh tế trong nền kinh tế thị trường|/hinh1.png](/hinh1.png)
 
 ### 3.1.1. Lợi ích kinh tế
 - **Khái niệm về lợi ích:** Lợi ích chính là mức độ đáp ứng những nhu cầu của con người, trong đó sự đáp ứng này cần được nhận thức rõ ràng và đặt vào bối cảnh các mối quan hệ xã hội, tương ứng với một cấp độ phát triển cụ thể của nền sản xuất xã hội.
@@ -44,7 +44,7 @@
 
 ## 3.2. Vai trò của nhà nước trong việc bảo đảm sự hài hòa giữa các quan hệ lợi ích
 
-![Hình 2: Sự cân bằng, minh bạch và quản lý vĩ mô từ phía Nhà nước](/hinh2.png)
+![Hình 2: Sự cân bằng, minh bạch và quản lý vĩ mô từ phía Nhà nước|/hinh2.png](/hinh2.png)
 
 - **3.2.1. Che chở các lợi ích chính đáng và xây dựng môi trường thuận lợi cho hành trình mưu cầu lợi ích của các chủ thể kinh tế:** 
   Việc kiến tạo một bối cảnh thuận lợi trước tiên đòi hỏi phải duy trì được sự bình ổn về chính trị. Điều này cũng yêu cầu phải thiết lập một hệ thống pháp lý minh bạch, cởi mở để bảo vệ quyền lợi hợp pháp của các chủ thể tham gia, đồng thời chú trọng rót vốn phát triển hệ thống cơ sở hạ tầng kinh tế.

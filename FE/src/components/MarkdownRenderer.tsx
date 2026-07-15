@@ -14,13 +14,26 @@ function parseInline(text: string): ReactNode {
     else if (t.startsWith("`"))  parts.push(<code key={k++} className="md-code">{t.slice(1, -1)}</code>);
     else if (t.startsWith("![")) {
       const match = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(t);
-      if (match) parts.push(
-        <figure key={k++} className="float-right ml-6 mb-4 mt-1 w-[40%] min-w-[280px] max-w-[450px]">
-          <img src={match[2]} alt={match[1]} className="rounded-xl w-full object-cover shadow-lg border border-[#ece6d4]" />
-          {match[1] && <figcaption className="text-center text-[0.85rem] text-gray-500 mt-2 italic">{match[1]}</figcaption>}
-        </figure>
-      );
-      else parts.push(t);
+      if (match) {
+        const altText = match[1];
+        const [caption, linkUrl] = altText.split("|");
+        parts.push(
+          <figure key={k++} className="float-right ml-6 mb-4 mt-1 w-[40%] min-w-[280px] max-w-[450px]">
+            <img src={match[2]} alt={caption} className="rounded-xl w-full object-cover shadow-lg border border-[#ece6d4]" />
+            {caption && (
+              <figcaption className="text-center text-[0.85rem] text-gray-500 mt-2 italic">
+                {linkUrl ? (
+                  <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="hover:text-[#3f6048] underline decoration-dotted">
+                    {caption}
+                  </a>
+                ) : (
+                  caption
+                )}
+              </figcaption>
+            )}
+          </figure>
+        );
+      } else parts.push(t);
     }
     else if (t.startsWith("[")) {
       const match = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(t);

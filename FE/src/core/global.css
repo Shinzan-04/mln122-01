@@ -1324,8 +1324,11 @@ textarea {
   font-size: 0.95rem;
   line-height: 1.85;
   color: var(--theme-text);
-  display: grid;
-  gap: 14px;
+  display: block;
+}
+
+.md-content > * + * {
+  margin-top: 14px;
 }
 
 .md-h1 {

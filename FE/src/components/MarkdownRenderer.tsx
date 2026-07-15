@@ -14,7 +14,12 @@ function parseInline(text: string): ReactNode {
     else if (t.startsWith("`"))  parts.push(<code key={k++} className="md-code">{t.slice(1, -1)}</code>);
     else if (t.startsWith("![")) {
       const match = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(t);
-      if (match) parts.push(<img key={k++} src={match[2]} alt={match[1]} className="md-image rounded-xl float-right ml-8 mb-4 mt-2 w-72 md:w-80 object-cover shadow-md border border-[#ece6d4]" />);
+      if (match) parts.push(
+        <figure key={k++} className="float-right ml-6 mb-4 mt-1 w-[40%] min-w-[280px] max-w-[450px]">
+          <img src={match[2]} alt={match[1]} className="rounded-xl w-full object-cover shadow-lg border border-[#ece6d4]" />
+          {match[1] && <figcaption className="text-center text-[0.85rem] text-gray-500 mt-2 italic">{match[1]}</figcaption>}
+        </figure>
+      );
       else parts.push(t);
     }
     else if (t.startsWith("[")) {
@@ -59,12 +64,17 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
     }
 
     /* ── Blockquote ── */
-    if (line.startsWith("> ")) {
+    if (line.startsWith(">")) {
       const qs: string[] = [];
-      while (i < lines.length && lines[i].startsWith("> ")) { qs.push(lines[i].slice(2)); i++; }
+      while (i < lines.length && lines[i].startsWith(">")) { 
+        qs.push(lines[i].replace(/^>\s?/, "")); 
+        i++; 
+      }
       out.push(
         <blockquote key={`bq-${i}`} className="md-blockquote">
-          <p>{parseInline(qs.join(" "))}</p>
+          {qs.map((q, idx) => (
+             <div key={idx} style={{ marginBottom: "6px" }}>{parseInline(q)}</div>
+          ))}
         </blockquote>
       );
       continue;
@@ -101,10 +111,10 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
     }
 
     /* ── Unordered list ── */
-    if (/^[-*] /.test(line)) {
+    if (/^\s*[-*] /.test(line)) {
       const items: JSX.Element[] = [];
-      while (i < lines.length && /^[-*] /.test(lines[i])) {
-        items.push(<li key={i}>{parseInline(lines[i].slice(2))}</li>);
+      while (i < lines.length && /^\s*[-*] /.test(lines[i])) {
+        items.push(<li key={i}>{parseInline(lines[i].replace(/^\s*[-*]\s/, ""))}</li>);
         i++;
       }
       out.push(<ul key={`ul-${i}`} className="md-list">{items}</ul>);
@@ -112,10 +122,10 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
     }
 
     /* ── Ordered list ── */
-    if (/^\d+\.\s/.test(line)) {
+    if (/^\s*\d+\.\s/.test(line)) {
       const items: JSX.Element[] = [];
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        items.push(<li key={i}>{parseInline(lines[i].replace(/^\d+\.\s/, ""))}</li>);
+      while (i < lines.length && /^\s*\d+\.\s/.test(lines[i])) {
+        items.push(<li key={i}>{parseInline(lines[i].replace(/^\s*\d+\.\s/, ""))}</li>);
         i++;
       }
       out.push(<ol key={`ol-${i}`} className="md-list md-ol">{items}</ol>);
@@ -133,8 +143,8 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
       !lines[i].startsWith("#") &&
       !lines[i].startsWith("|") &&
       !lines[i].startsWith(">") &&
-      !/^[-*] /.test(lines[i]) &&
-      !/^\d+\.\s/.test(lines[i]) &&
+      !/^\s*[-*] /.test(lines[i]) &&
+      !/^\s*\d+\.\s/.test(lines[i]) &&
       !/^[-*_]{3,}$/.test(lines[i].trim())
     ) {
       para.push(lines[i]);
@@ -142,11 +152,11 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
     }
     if (para.length) {
       out.push(
-        <p key={`p-${i}`} className="md-p">
+        <div key={`p-${i}`} className="md-p">
           {para.map((l, j) => (
             <span key={j}>{j > 0 && " "}{parseInline(l)}</span>
           ))}
-        </p>
+        </div>
       );
     }
   }

@@ -93,6 +93,31 @@ export function MarkdownRenderer({ content }: { content: string }): JSX.Element 
       continue;
     }
 
+    /* ── Accordion (Collapse/Expand) ── */
+    if (line.startsWith(":::accordion ")) {
+      const summaryText = line.slice(13);
+      const accContent: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].startsWith(":::")) {
+        accContent.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length && lines[i].startsWith(":::")) i++;
+      
+      out.push(
+        <details key={`acc-${i}`} className="md-accordion group mb-3">
+          <summary className={`cursor-pointer hover:text-[var(--theme-primary)] transition-colors flex items-start gap-2 list-none select-none ${summaryText.startsWith("### ") ? "md-h3 mb-0" : "font-bold text-[var(--theme-text)]"}`}>
+            <span className={`transform group-open:rotate-90 transition-transform duration-200 shrink-0 text-[var(--theme-primary)] ${summaryText.startsWith("### ") ? "mt-1.5 text-[0.8rem]" : "mt-1.5 text-[0.7rem]"}`}>▶</span>
+            <span>{parseInline(summaryText.replace(/^###\s+/, ""))}</span>
+          </summary>
+          <div className="pl-6 pt-2 text-[var(--theme-text)] leading-relaxed">
+            <MarkdownRenderer content={accContent.join("\n")} />
+          </div>
+        </details>
+      );
+      continue;
+    }
+
     /* ── Horizontal rule ── */
     if (/^[-*_]{3,}$/.test(line.trim())) {
       out.push(<hr key={i} className="md-hr" />);
